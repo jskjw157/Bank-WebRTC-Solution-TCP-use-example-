@@ -1,0 +1,86 @@
+general: {
+    configs_folder = "/opt/janus/etc/janus"
+    plugins_folder = "/opt/janus/lib/janus/plugins"
+    transports_folder = "/opt/janus/lib/janus/transports"
+    events_folder = "/opt/janus/lib/janus/events"
+    loggers_folder = "/opt/janus/lib/janus/loggers"
+    
+    # 로그 설정
+    log_to_stdout = false
+    log_to_file = "/home/user/webapp/logs/janus.log"
+    debug_level = 4
+    debug_timestamps = true
+    debug_colors = false
+    
+    # API 보안
+    admin_secret = "changeme_admin_secret"
+    api_secret = "changeme_api_secret"
+    
+    # 세션 타임아웃 (초)
+    session_timeout = 60
+}
+
+# TCP 전용 NAT 설정
+nat: {
+    # STUN 서버 (Google Public STUN)
+    stun_server = "stun.l.google.com"
+    stun_port = 19302
+    
+    # 공인 IP (환경에 맞게 변경 필요!)
+    # public_ip = "YOUR_PUBLIC_IP_HERE"
+    
+    # ICE 설정 - TCP 우선
+    ice_lite = false
+    ice_tcp = true
+    ice_enforce_list = "tcp"
+    
+    # 포트 범위 (TCP)
+    rtp_min_port = 40000
+    rtp_max_port = 40099
+    
+    # ICE 수집 타임아웃
+    ice_ignore_list = "vmnet"
+    ice_nomination = "regular"
+    ice_keepalive_conncheck = true
+    
+    # TURN 서버 (선택사항)
+    # turn_server = "turn:your-turn-server.com:3478"
+    # turn_user = "username"
+    # turn_pwd = "password"
+    # turn_type = "tcp"
+}
+
+# 미디어 설정
+media: {
+    # IPv6 지원
+    ipv6 = false
+    
+    # 최대 NACK 큐
+    max_nack_queue = 1000
+    
+    # RTP/RTCP 멀티플렉싱
+    rtp_port_range = "40000-40099"
+}
+
+# SSL/TLS 인증서
+certificates: {
+    # 인증서 경로 (환경에 맞게 변경 필요!)
+    cert_pem = "/home/user/webapp/certs/cert.pem"
+    cert_key = "/home/user/webapp/certs/key.pem"
+    
+    # DTLS
+    dtls_mtu = 1200
+    dtls_timeout = 500
+    dtls_rsa_key_size = 2048
+}
+
+# 이벤트 핸들러
+events: {
+    broadcast = true
+    disable = false
+}
+
+# 로거
+loggers: {
+    # 기본 로거만 사용
+}

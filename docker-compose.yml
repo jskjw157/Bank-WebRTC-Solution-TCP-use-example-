@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  financial-face-auth:
+    build: .
+    container_name: financial-face-auth
+    ports:
+      # 시그널링 서버
+      - "3000:3000"
+      # Janus HTTP API
+      - "8088:8088"
+      - "8089:8089"
+      # Janus WebSocket
+      - "8188:8188"
+      - "8989:8989"
+      # RTP/SRTP over TCP
+      - "40000-40099:40000-40099/tcp"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JANUS_URL=https://localhost:8089/janus
+      - JANUS_WS_URL=wss://localhost:8989
+      - JANUS_API_SECRET=${JANUS_API_SECRET}
+      - JANUS_ADMIN_SECRET=${JANUS_ADMIN_SECRET}
+      - PUBLIC_IP=${PUBLIC_IP}
+      - RECORDING_DIR=/app/recordings
+      - ENABLE_RECORDING=true
+      - SESSION_TIMEOUT=1800000
+      - LOG_LEVEL=info
+    volumes:
+      # 로그 저장
+      - ./logs:/app/logs
+      # 녹화 파일 저장
+      - ./recordings:/app/recordings
+      # SSL 인증서
+      - ./certs:/app/certs
+    restart: unless-stopped
+    networks:
+      - face-auth-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  face-auth-network:
+    driver: bridge

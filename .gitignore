@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Recordings
+recordings/
+*.mjr
+*.webm
+*.mp4
+
+# Certificates
+certs/*.pem
+certs/*.key
+
+# Janus
+janus-gateway/
+*.so
+*.a
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/

@@ -1,0 +1,49 @@
+general: {
+    json = "indented"
+    base_path = "/janus"
+    
+    # HTTP
+    http = true
+    port = 8088
+    
+    # HTTPS
+    https = true
+    secure_port = 8089
+    
+    # WebSocket
+    ws = true
+    ws_port = 8188
+    
+    # Secure WebSocket
+    wss = true
+    wss_port = 8989
+    
+    # WebSocket 설정
+    ws_logging = "err"
+    ws_acl = "127.,192.168."
+    
+    # CORS
+    cors_origins = "*"
+    cors_methods = "GET, POST, PUT, DELETE, OPTIONS"
+    cors_headers = "Content-Type, Authorization"
+    
+    # 보안
+    # admin_key = "supersecret"
+    
+    # ACL (접근 제어)
+    # admin_acl = "127.0.0.1,192.168.0.0/16"
+}
+
+admin: {
+    admin_http = true
+    admin_port = 7088
+    admin_https = true
+    admin_secure_port = 7889
+    admin_secret = "changeme_admin_secret"
+}
+
+# SSL 인증서 (메인 설정과 동일)
+certificates: {
+    cert_pem = "/home/user/webapp/certs/cert.pem"
+    cert_key = "/home/user/webapp/certs/key.pem"
+}

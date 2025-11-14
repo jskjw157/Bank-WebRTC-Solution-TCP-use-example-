@@ -1,0 +1,34 @@
+{
+  "name": "financial-face-authentication",
+  "version": "1.0.0",
+  "description": "금융권 TCP 화상인증 시스템 (Janus WebRTC 기반)",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
+    "install-janus": "bash scripts/install_janus.sh",
+    "setup-janus": "bash scripts/setup_janus.sh",
+    "start-janus": "bash scripts/start_janus.sh"
+  },
+  "keywords": [
+    "webrtc",
+    "janus",
+    "face-authentication",
+    "financial",
+    "tcp"
+  ],
+  "author": "GenSpark AI",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

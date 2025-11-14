@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>금융권 화상인증 시스템</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏦 금융권 화상인증 시스템</h1>
+      <p>Janus WebRTC Gateway 기반 TCP 전용 화상인증</p>
+    </header>
+
+    <main>
+      <!-- 역할 선택 화면 -->
+      <div id="roleSelection" class="screen active">
+        <div class="card">
+          <h2>역할을 선택하세요</h2>
+          <div class="role-buttons">
+            <button class="role-btn customer" onclick="selectRole('customer')">
+              <span class="icon">👤</span>
+              <span class="label">고객</span>
+              <span class="desc">본인 확인을 받으시려면 선택하세요</span>
+            </button>
+            <button class="role-btn agent" onclick="selectRole('agent')">
+              <span class="icon">👨‍💼</span>
+              <span class="label">상담원</span>
+              <span class="desc">고객 확인을 진행하시려면 선택하세요</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 입장 정보 입력 -->
+      <div id="joinForm" class="screen">
+        <div class="card">
+          <h2>입장 정보</h2>
+          <form id="joinFormElement">
+            <div class="form-group">
+              <label for="roomId">방 번호</label>
+              <input 
+                type="text" 
+                id="roomId" 
+                placeholder="예: 1234" 
+                required
+                pattern="[0-9]+"
+              >
+              <small>숫자만 입력하세요</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="displayName">이름</label>
+              <input 
+                type="text" 
+                id="displayName" 
+                placeholder="홍길동" 
+                required
+              >
+            </div>
+
+            <div class="button-group">
+              <button type="button" class="btn-secondary" onclick="goBack('roleSelection')">
+                뒤로
+              </button>
+              <button type="submit" class="btn-primary">
+                입장하기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 화상 통화 화면 -->
+      <div id="callScreen" class="screen">
+        <div class="video-container">
+          <!-- 로컬 비디오 -->
+          <div class="video-wrapper local">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <div class="video-label">
+              <span id="localLabel">내 화면</span>
+            </div>
+            <div class="video-controls">
+              <button id="toggleAudio" class="control-btn" title="마이크 켜기/끄기">
+                🎤
+              </button>
+              <button id="toggleVideo" class="control-btn" title="카메라 켜기/끄기">
+                📹
+              </button>
+            </div>
+          </div>
+
+          <!-- 원격 비디오 -->
+          <div class="video-wrapper remote">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div class="video-label">
+              <span id="remoteLabel">상대방</span>
+            </div>
+            <div id="waitingMessage" class="waiting-message">
+              <div class="spinner"></div>
+              <p>상대방을 기다리는 중...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 통화 정보 및 제어 -->
+        <div class="call-info">
+          <div class="info-row">
+            <span class="info-label">방 번호:</span>
+            <span id="currentRoomId">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">역할:</span>
+            <span id="currentRole">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">연결 상태:</span>
+            <span id="connectionStatus" class="status">연결 중...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">통화 시간:</span>
+            <span id="callDuration">00:00</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="endCall" class="btn-danger">
+            📞 통화 종료
+          </button>
+        </div>
+      </div>
+
+      <!-- 종료 화면 -->
+      <div id="endScreen" class="screen">
+        <div class="card">
+          <h2>✅ 통화가 종료되었습니다</h2>
+          <div class="end-info">
+            <p>화상인증이 완료되었습니다.</p>
+            <p>통화 시간: <span id="finalDuration">00:00</span></p>
+          </div>
+          <button class="btn-primary" onclick="location.reload()">
+            처음으로
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 금융권 화상인증 시스템 | Powered by Janus WebRTC</p>
+    </footer>
+  </div>
+
+  <!-- Janus 라이브러리 -->
+  <script src="https://cdn.jsdelivr.net/npm/janus-gateway@1.2.0/html/janus.js"></script>
+  <!-- 어댑터 (WebRTC 브라우저 호환성) -->
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <!-- 메인 스크립트 -->
+  <script src="app.js"></script>
+</body>
+</html>

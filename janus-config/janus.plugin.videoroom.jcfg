@@ -1,0 +1,52 @@
+# VideoRoom 플러그인 설정
+
+general: {
+    # 이벤트 핸들러
+    events = true
+    
+    # 방 자동 생성 허용
+    # allow_room_creation = true
+    
+    # 관리자 키
+    admin_key = "supersecret"
+    
+    # 문자열 ID 허용
+    string_ids = true
+}
+
+# 화상 인증용 기본 방 (선택사항)
+# room-1234: {
+#     description = "Face Authentication Room"
+#     secret = "room_secret"
+#     publishers = 2
+#     
+#     # 비트레이트 제한
+#     bitrate = 1000000
+#     bitrate_cap = true
+#     
+#     # 비디오 코덱
+#     videocodec = "h264,vp8"
+#     video_svc = false
+#     
+#     # 오디오 코덱
+#     audiocodec = "opus"
+#     
+#     # 녹화
+#     record = true
+#     rec_dir = "/home/user/webapp/recordings"
+#     
+#     # TCP 최적화
+#     transport_wide_cc_ext = true
+#     
+#     # 기타 설정
+#     audiolevel_ext = true
+#     audiolevel_event = false
+#     audio_active_packets = 100
+#     audio_level_average = 25
+#     
+#     videoorient_ext = true
+#     playoutdelay_ext = true
+#     
+#     # 알림
+#     notify_joining = true
+# }
