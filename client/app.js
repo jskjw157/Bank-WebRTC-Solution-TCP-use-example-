@@ -272,8 +272,14 @@ function publishOwnFeed() {
       data: false
     },
     stream: state.localStream,
+    // 🔥 TCP 전용 설정
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' }
+    ],
+    trickle: true,
     success: (jsep) => {
       console.log('✅ Offer 생성 성공');
+      console.log('🔥 TCP 전용 모드로 SDP 생성됨');
       
       const publish = {
         request: 'configure',

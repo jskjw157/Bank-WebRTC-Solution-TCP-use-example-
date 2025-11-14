@@ -20,34 +20,48 @@ general: {
     session_timeout = 60
 }
 
-# TCP 전용 NAT 설정
+# ============================================
+# TCP 전용 NAT 설정 (금융권 방화벽 환경 최적화)
+# ============================================
 nat: {
     # STUN 서버 (Google Public STUN)
     stun_server = "stun.l.google.com"
     stun_port = 19302
     
-    # 공인 IP (환경에 맞게 변경 필요!)
+    # 공인 IP (환경에 맞게 변경 필수!)
     # public_ip = "YOUR_PUBLIC_IP_HERE"
     
-    # ICE 설정 - TCP 우선
-    ice_lite = false
-    ice_tcp = true
-    ice_enforce_list = "tcp"
+    # ========================================
+    # 🔥 TCP 전용 설정 (핵심!)
+    # ========================================
+    ice_lite = false                    # Full ICE (Lite 비활성화)
+    ice_tcp = true                      # ✅ TCP ICE 활성화 (필수!)
+    ice_enforce_list = "tcp"            # ✅ TCP만 강제 사용 (UDP 차단!)
     
-    # 포트 범위 (TCP)
-    rtp_min_port = 40000
-    rtp_max_port = 40099
+    # ICE Candidate 필터링
+    ice_ignore_list = "vmnet,vboxnet"   # 가상 네트워크 무시
     
-    # ICE 수집 타임아웃
-    ice_ignore_list = "vmnet"
-    ice_nomination = "regular"
-    ice_keepalive_conncheck = true
+    # 포트 범위 (TCP 전용)
+    rtp_min_port = 40000                # TCP RTP 시작 포트
+    rtp_max_port = 40099                # TCP RTP 종료 포트 (100개 포트)
     
-    # TURN 서버 (선택사항)
+    # ICE 동작 설정
+    ice_nomination = "regular"          # Regular nomination (표준)
+    ice_keepalive_conncheck = true      # ICE keepalive 활성화
+    ice_consent_freshness = true        # ICE consent freshness 확인
+    
+    # 🔥 TCP 최적화 설정
+    # ice_trickle = true                # Trickle ICE 활성화 (기본값)
+    # ice_timeout = 15                  # ICE 수집 타임아웃 (초)
+    
+    # TURN 서버 (TCP 전용, 선택사항)
+    # NAT 환경이 매우 제한적인 경우 TURN 서버 사용
     # turn_server = "turn:your-turn-server.com:3478"
     # turn_user = "username"
     # turn_pwd = "password"
-    # turn_type = "tcp"
+    # turn_type = "tcp"                 # ✅ TURN도 TCP 사용!
+    # turn_rest_api = "http://turn-server/api"
+    # turn_rest_api_key = "secret"
 }
 
 # 미디어 설정
